@@ -1,9 +1,10 @@
 "use server";
+import { redirect } from "next/navigation";
 import { Usuario } from "./types";
 import { pool } from "./utils/dbConnection";
 import dbConnect from "./utils/dbConnection";
 import { DatabaseError } from "pg";
-import { format } from "date-fns";
+import { md5 } from "js-md5";
 
 // Adicionar novo Usuário
 export async function createUser(data: FormData) {
@@ -15,19 +16,23 @@ export async function createUser(data: FormData) {
 
     console.log("1:", nome, email, senha);
 
-    try {
-        const newUser = await pool.query(
-            `INSERT INTO usuario (nome, email, senha, data_criacao)
+    if (senha && nome && email != undefined) {
+        try {
+            const senhaHash = md5(senha.toString());
+            const newUser = await pool.query(
+                `INSERT INTO usuario (nome, email, senha, data_criacao)
                          VALUES ($1, $2, $3, $4)
                          RETURNING *`,
-            [nome, email, senha, isoTimestamp]
-        );
-        console.log("2: Usuario criado");
-        console.log(newUser.rows[0]);
-    } catch (err) {
-        console.log(err);
-        let erro = err as DatabaseError;
-        if (erro.detail?.includes("existe")) {
+                [nome, email, senhaHash, isoTimestamp]
+            );
+            console.log("2: Usuario criado");
+            console.log(newUser.rows[0]);
+            redirect("/");
+        } catch (err) {
+            console.log(err);
+            let erro = err as DatabaseError;
+            if (erro.detail?.includes("existe")) {
+            }
         }
     }
 }
@@ -43,7 +48,7 @@ export async function getUsers(): Promise<Usuario[]> {
             nome: row.nome,
             email: row.email,
             senha: row.senha,
-            dataCriacao: new Date(row.dataCriacao),
+            data_criacao: new Date(row.data_criacao),
         }));
 
         return usuarios;

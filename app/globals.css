@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    box-sizing: border-box !important;
+}
+
+.sectionTitle {
+    font-size: 1.4vw;
+    color: #0f172a;
+    font-weight: bold;
+}

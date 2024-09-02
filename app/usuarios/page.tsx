@@ -5,23 +5,24 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createUser, getUsers } from "../actions";
 import { Usuario } from "../types";
+import { format } from "date-fns";
 
 export default async function Usuairos() {
-    //CREATE
-    const users = await getUsers();
+    //Buscar usuarios
+    let users = await getUsers();
 
     return (
-        <main>
-            <h1>Usuarios</h1>
+        <main className="usuarios_page">
+            <h1 className="sectionTitle">Usuarios</h1>
             <div>
                 <h3>adicionar Usuario</h3>
-                <form action={createUser} className="space-y-5">
+                <form action={createUser} className="space-y-5 mb-10">
                     <input
                         type="text"
                         name="nome"
                         id="newNome"
                         placeholder="Nome do usuario"
-                        className="shadow-lg rounded-md shadow-black h-10 p-3"
+                        className="shadow-md mr-4  rounded-md shadow-black h-10 p-3"
                     />
 
                     <input
@@ -29,7 +30,7 @@ export default async function Usuairos() {
                         name="email"
                         id="newEmail"
                         placeholder="Email"
-                        className="shadow-lg rounded-md shadow-black h-10 p-3"
+                        className="shadow-md mr-4 rounded-md shadow-black h-10 p-3"
                     />
 
                     <input
@@ -37,14 +38,14 @@ export default async function Usuairos() {
                         name="senha"
                         id="newSenha"
                         placeholder="Senha"
-                        className="shadow-lg rounded-md shadow-black h-10 p-3"
+                        className="shadow-md mr-4 rounded-md shadow-black h-10 p-3"
                     />
 
                     <button
                         type="submit"
-                        className="font-bold text-white bg-red-600 p-3 rounded-md"
+                        className="font-bold text-white bg-[#1055DA]  p-3 rounded-md"
                     >
-                        Criar
+                        Criar Usuário
                     </button>
                 </form>
             </div>
@@ -56,9 +57,16 @@ export default async function Usuairos() {
                         {users.map((element, key) => {
                             return (
                                 <li key={key}>
-                                    <div>{element.nome}</div>
-                                    <div>{element.email}</div>
-                                    <div>{element.dataCriacao.toString()}</div>
+                                    <div>Login: {element.nome}</div>
+                                    <div>Email: {element.email}</div>
+                                    <div>Senha: {element.senha}</div>
+                                    <div>
+                                        Data de Criação:
+                                        {format(
+                                            element.data_criacao,
+                                            "dd-MM-yyyy HH:mm"
+                                        )}
+                                    </div>
                                     <div>
                                         --------------------------------------
                                     </div>

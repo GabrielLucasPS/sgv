@@ -1,0 +1,78 @@
+.navbarContainer {
+    background-color: #1055da;
+    width: 3.5vw;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1vw 0;
+}
+
+.menuBtn {
+    height: 2.5vw;
+    width: 2.5vw;
+
+    display: block;
+    padding: 0.2vw;
+
+    border-radius: 0.3vw;
+
+    margin-bottom: 1vw;
+}
+
+.menuBtn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.menuBtn .img {
+    width: 100%;
+    height: 100%;
+}
+
+.menuBtn.ativo {
+    background-color: #fff;
+}
+
+.menuBtn.ativo .img {
+}
+
+.menuBtn .img {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.homeIcon .img {
+    background-image: url("/homeBranco.svg");
+}
+
+.homeIcon.ativo .img {
+    background-image: url("/home.svg");
+}
+
+.registrosIcon .img {
+    background-image: url("/registros.svg");
+}
+
+.animaisIcon .img {
+    background-image: url("/animais.svg");
+}
+
+.usuariosIcon .img {
+    background-image: url("/usuarios.svg");
+}
+
+.usuariosIcon.ativo .img {
+    background-image: url("/usuariosAtivo.svg");
+}
+
+.logoutIcon {
+    margin-bottom: 0px !important;
+}
+
+.logoutIcon .img {
+    background-image: url("/logout.svg");
+}

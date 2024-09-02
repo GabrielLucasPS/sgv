@@ -3,7 +3,7 @@ export interface Usuario {
     nome: string;
     email: string;
     senha: string;
-    dataCriacao: Date;
+    data_criacao: Date;
 }
 
 export interface Animal {
