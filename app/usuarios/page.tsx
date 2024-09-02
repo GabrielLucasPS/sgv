@@ -60,7 +60,7 @@ export default async function Usuairos() {
                                     <div>{element.email}</div>
                                     <div>{element.dataCriacao.toString()}</div>
                                     <div>
-                                        ---------------------------------------
+                                        --------------------------------------
                                     </div>
                                 </li>
                             );
