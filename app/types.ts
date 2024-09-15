@@ -6,6 +6,12 @@ export interface Usuario {
     data_criacao: Date;
 }
 
+export interface Login {
+    id: number;
+    nome: string;
+    email: string;
+}
+
 export interface Animal {
     id: number;
     especie: string;
