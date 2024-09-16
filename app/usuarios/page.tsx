@@ -7,7 +7,7 @@ import { createUser, getUsers } from "../actions";
 import { Usuario } from "../types";
 import { format } from "date-fns";
 
-export default async function Usuairos() {
+export default async function Usuarios() {
     //Buscar usuarios
     let users = await getUsers();
 
