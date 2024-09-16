@@ -2,66 +2,70 @@
 import { redirect } from "next/navigation";
 import { Usuario, Login } from "./types";
 import { pool } from "./utils/dbConnection";
-import dbConnect from "./utils/dbConnection";
-import { DatabaseError } from "pg";
+
 import { md5 } from "js-md5";
 
 // Adicionar novo Usuário
+
 export async function createUser(data: FormData) {
-    "use server";
-    let nome = data.get("nome")?.valueOf();
-    let email = data.get("email")?.valueOf() as string;
-    let senha = data.get("senha")?.valueOf();
+    let nome = data.get("nome")?.toString().trim() as string;
+    let email = data.get("email")?.toString().trim() as string;
+    let senha = data.get("senha")?.toString() as string;
     const isoTimestamp = new Date().toISOString();
-
-    console.log("1:", nome, email, senha);
-
-    if (senha && nome && email != undefined) {
-        console.log("------------------------Entrou------------------------");
+    // Dados foram preenchidos?
+    if (senha && nome && email) {
         try {
-            const senhaHash = md5(senha.toString());
+            const senhaHash = md5(senha);
+
             const usuarioExistente = await pool.query<Login>(
-                `SELECT id, nome, email FROM usuario WHERE email = '${email}'`
+                `SELECT id, nome, email FROM usuario WHERE email = LOWER($1)`,
+                [email]
             );
 
-            if (usuarioExistente.rows.length <= 0) {
-                console.log(
-                    "------------------------------------ ",
-                    usuarioExistente?.rows[0]
-                );
-                const newUser = await pool.query(
+            // Usuário exsite?
+            if (usuarioExistente.rows.length === 0) {
+                await pool.query(
                     `INSERT INTO usuario (nome, email, senha, data_criacao)
-                             VALUES ($1, LOWER($2), $3, $4)
-                             RETURNING *`,
+                     VALUES ($1, LOWER($2), $3, $4)
+                     RETURNING *`,
                     [nome, email, senhaHash, isoTimestamp]
                 );
 
-                console.log("2: Usuario criado");
-                console.log(newUser.rows[0]);
-                redirect("/");
+                return {
+                    success: true,
+                    message: "Usuário adicionado.",
+                };
             } else {
-                console.log(`Email já existe!`);
+                return {
+                    success: false,
+                    message: "Email já existe",
+                };
             }
         } catch (err) {
-            console.log(err);
-            let erro = err as DatabaseError;
-            if (erro.detail?.includes("existe")) {
-            }
+            console.error(err);
+            return {
+                success: false,
+                message: "Erro ao criar usuário",
+            };
         }
+    } else {
+        return {
+            success: false,
+            message: "Dados incompletos",
+        };
     }
 }
 
 // Pegar todos os usuários do banco de dados
-export async function getUsers(): Promise<Usuario[]> {
+export async function getUsers(): Promise<Login[]> {
     try {
         // Aqui usamos Usuario como o tipo genérico correto
-        const Users = await pool.query<Usuario>(`SELECT * FROM usuario`);
+        const Users = await pool.query<Login>(`SELECT * FROM usuario`);
 
-        const usuarios: Usuario[] = Users.rows.map((row) => ({
+        const usuarios: Login[] = Users.rows.map((row) => ({
             id: row.id,
             nome: row.nome,
             email: row.email,
-            senha: row.senha,
             data_criacao: new Date(row.data_criacao),
         }));
 
@@ -89,23 +93,17 @@ export async function getUsers(): Promise<Usuario[]> {
 //         throw err;
 //     }
 // }
-
+/*
 export async function login(): Promise<Login> {
     try {
         // Aqui usamos Usuario como o tipo genérico correto
-        const Users = await pool.query<Usuario>(`SELECT * FROM usuario`);
-
-        const usuarios: Usuario[] = Users.rows.map((row) => ({
-            id: row.id,
-            nome: row.nome,
-            email: row.email,
-            senha: row.senha,
-            data_criacao: new Date(row.data_criacao),
-        }));
-
-        return usuarios;
+        const login = await pool.query<Login>(
+            `SELECT id, nome, email FROM usuario`
+        );
+        return login;
     } catch (err) {
         console.error("Erro ao buscar usuários:", err);
         throw err;
     }
 }
+*/

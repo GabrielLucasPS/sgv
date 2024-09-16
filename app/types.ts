@@ -3,6 +3,7 @@ export interface Usuario {
     nome: string;
     email: string;
     senha: string;
+    hash?: string;
     data_criacao: Date;
 }
 
@@ -10,6 +11,8 @@ export interface Login {
     id: number;
     nome: string;
     email: string;
+    hash?: string;
+    data_criacao: Date;
 }
 
 export interface Animal {
