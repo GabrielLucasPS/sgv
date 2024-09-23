@@ -75,35 +75,3 @@ export async function getUsers(): Promise<Login[]> {
         throw err;
     }
 }
-
-// export async function getUsers() {
-//     try {
-//         const Users = await pool.query<Usuario[]>(`SELECT * FROM usuario`);
-
-//         // const usuarios: Usuario[] = Users.rows.map((row) => ({
-//         //     id: row.id,
-//         //     nome: row.nome,
-//         //     email: row.email,
-//         //     senha: row.senha,
-//         //     dataCriacao: row.data_criacao,
-//         // }));
-//         return Users.rows;
-//     } catch (err) {
-//         console.error("Erro ao buscar usuários:", err);
-//         throw err;
-//     }
-// }
-/*
-export async function login(): Promise<Login> {
-    try {
-        // Aqui usamos Usuario como o tipo genérico correto
-        const login = await pool.query<Login>(
-            `SELECT id, nome, email FROM usuario`
-        );
-        return login;
-    } catch (err) {
-        console.error("Erro ao buscar usuários:", err);
-        throw err;
-    }
-}
-*/

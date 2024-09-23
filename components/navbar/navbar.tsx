@@ -4,15 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import "./navbar.css";
 
-type Props = {
-    logado?: boolean;
-    path?: string;
-};
-
-const Navbar = async ({ logado, path }: Props) => {
+const Navbar = async () => {
     const pathname = usePathname();
 
-    if (pathname != "login") {
+    if (pathname != "/") {
         return (
             <nav className="navbarContainer">
                 <div>
