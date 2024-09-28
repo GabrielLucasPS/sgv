@@ -1,4 +1,14 @@
 .usuarios_page {
     padding: 1vw;
     width: 100%;
+
+    overflow: auto;
+}
+
+.adicionarUsuarios {
+    position: sticky;
+    top: -1vw;
+    z-index: 1000;
+    background-color: white;
+    padding-top: 0.5vw;
 }
