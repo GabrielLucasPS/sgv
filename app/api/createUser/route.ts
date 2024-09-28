@@ -5,6 +5,7 @@ import * as z from "zod";
 import { md5 } from "js-md5";
 
 import { subHours } from "date-fns";
+import { revalidatePath } from "next/cache";
 
 // defina um schema para validar um input
 
@@ -44,6 +45,7 @@ export async function POST(req: Request) {
                         [nome, email, senhaHash, isoTimestamp]
                     );
                     console.log("Criou");
+                    revalidatePath("/usuarios");
                     return NextResponse.json(
                         {
                             success: true,

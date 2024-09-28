@@ -60,7 +60,6 @@ export default function CreateUserForm() {
                 variant: "success",
             });
             form.reset();
-            router.refresh();
         } else {
             toast({
                 title: "Erro",
