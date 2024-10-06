@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { pool } from "@/lib/dbConnection";
 import { Usuario } from "@/lib/types/dbTypes";
-
+import { toast } from "@/hooks/use-toast";
 const handler = nextAuth({
     session: {
         strategy: "jwt",
@@ -43,6 +43,7 @@ const handler = nextAuth({
                         email: usuarioParaLogin.email,
                     };
                 } else {
+                    console.log("login errado");
                     return null;
                 }
             },

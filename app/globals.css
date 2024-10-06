@@ -151,16 +151,26 @@ body {
     width: 100%;
 }
 
-.deleteIcon {
-    background-image: url("/delete.svg");
+.deleteIcon,
+.editIcon {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
 
     background-color: transparent;
+    box-shadow: none;
 }
 
-.deleteIcon:hover {
+.deleteIcon {
+    background-image: url("/delete.svg");
+}
+
+.editIcon {
+    background-image: url("/edit.svg");
+}
+
+.deleteIcon:hover,
+.editIcon:hover {
     background-color: #e8e8e8 !important;
 }

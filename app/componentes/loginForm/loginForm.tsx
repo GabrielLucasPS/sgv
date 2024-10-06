@@ -1,6 +1,5 @@
 "use client";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
+import { toast, useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
@@ -26,7 +25,6 @@ const FormSchema = z.object({
 
 export default function LoginForm() {
     const router = useRouter();
-    const { toast } = useToast();
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -37,7 +35,8 @@ export default function LoginForm() {
     });
 
     const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-        const res = await signIn("credentials", {
+        let res: any = null;
+        res = await signIn("credentials", {
             email: values.email,
             senha: values.senha,
             redirect: false,
@@ -46,9 +45,13 @@ export default function LoginForm() {
         if (!res?.error) {
             router.push("/");
             router.refresh();
+        } else {
+            console.log("------------", res);
+            toast({
+                title: "Email ou senha incorreto.",
+                variant: "destructive",
+            });
         }
-
-        console.log("res Login: ", res);
     };
 
     return (

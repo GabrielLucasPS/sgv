@@ -14,7 +14,7 @@ export default async function Usuarios() {
                 <CreateUserForm />
             </div>
 
-            <div>
+            <div className="tabelaUsuariosContainer">
                 <h2 className="font-bold text-2xl mb-2">Usuarios</h2>
                 <TabelaUsuarios session={session} />
             </div>
