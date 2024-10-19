@@ -25,7 +25,14 @@ const Navbar = () => {
                     <div className="img"></div>
                 </Link>
 
-                <Link href="/" className="menuBtn  animaisIcon">
+                <Link
+                    href="/animais"
+                    className={
+                        pathname == "/animais"
+                            ? "menuBtn  animaisIcon ativo "
+                            : "menuBtn  animaisIcon"
+                    }
+                >
                     <div className="img"></div>
                 </Link>
 

@@ -1,0 +1,9 @@
+CREATE TABLE animal (
+    id SERIAL PRIMARY KEY,
+    especie VARCHAR(50) NOT NULL,
+    brinco VARCHAR(50) NOT NULL,
+    dataNascimento DATE,
+    peso DECIMAL(7, 2), -- Exemplo: 15.75 kg
+    dataDesmame DATE,
+    dataRegistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
