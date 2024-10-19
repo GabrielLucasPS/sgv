@@ -1,11 +1,11 @@
 import { Pool } from "pg";
 
 export const pool = new Pool({
-    user: process.env.USER_NAME,
-    host: process.env.HOST_NAME,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: process.env.PORT_NUMBER,
+    user: "postgres",
+    host: "127.0.0.1",
+    database: "sgv",
+    password: "1q2w3e4r5T",
+    port: 5432,
 });
 
 export default async function dbConnect() {
