@@ -1,14 +1,13 @@
 // app/api/deleteUser/route.ts
 import { NextResponse } from "next/server";
 import { pool } from "@/lib/dbConnection";
-import {Animal} from "@/lib/types/dbTypes";
+import { Animal } from "@/lib/types/dbTypes";
 import { useEffect, useState } from "react";
 
 export async function GET(request: Request) {
     try {
         const Animal = await pool.query<Animal>(`SELECT * FROM Animal`);
-        
-
+        console.log(Animal.rows);
         return NextResponse.json({
             success: true,
             message: "Animal encontrados.",

@@ -10,7 +10,7 @@ import { Animal } from "@/lib/types/dbTypes";
 
 const FormSchema = z.object({
     especie: z.string().min(1, "").max(100),
-    brinco: z.number().min(1, ""),
+    brinco: z.string().min(1, ""),
     peso: z.number().min(1, "").max(10000),
     dataNascimento: z.string(),
     dataDesmame: z.string(),

@@ -1,5 +1,5 @@
 "use client";
-import { format, subHours } from "date-fns";
+import { format } from "date-fns";
 import {
     Table,
     TableBody,
@@ -28,18 +28,20 @@ import { Animal } from "@/lib/types/dbTypes";
 import { Session } from "next-auth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
 interface Props {
     session: Session | null;
 }
 
 export function TabelaAnimais({ session }: Props) {
-    const [animalList, setAnimais] = useState<Animal[]>([]); // Estado para armazenar os usuários
+    const [animalList, setAnimais] = useState<Animal[]>([]); // Estado para armazenar os animais
     const [loading, setLoading] = useState<boolean>(true); // Estado de carregamento
     const [error, setError] = useState<string | null>(null); // Estado para erros
 
     const [Especie, setEspecie] = useState<string>("");
     const [Brinco, setBrinco] = useState<string>("");
     const [Peso, setPeso] = useState<number>(0);
+    const [editingAnimal, setEditingAnimal] = useState<Animal | null>(null); // Armazena o animal que está sendo editado
 
     const fetchAnimais = async () => {
         try {
@@ -53,24 +55,23 @@ export function TabelaAnimais({ session }: Props) {
             const data = await response.json();
 
             if (data.success) {
-                setAnimais(data.Animais); // Atualiza o estado com os usuários recebidos
+                setAnimais(data.Animais); // Atualiza o estado com os animais recebidos
             } else {
-                setError("Nenhum usuário encontrado.");
+                setError("Nenhum animal encontrado.");
             }
         } catch (err) {
-            setError("Erro ao buscar usuários.");
+            setError("Erro ao buscar animais.");
         } finally {
             setLoading(false); // Finaliza o estado de carregamento
         }
     };
 
-    // Usando useEffect para buscar os usuários quando o componente for montado
+    // Usando useEffect para buscar os animais quando o componente for montado
     useEffect(() => {
         fetchAnimais();
     }, []);
 
     const handleDelete = async (id: number) => {
-        console.log("ID: ", id);
         try {
             const response = await fetch("/api/deleteAnimal", {
                 method: "POST",
@@ -83,7 +84,7 @@ export function TabelaAnimais({ session }: Props) {
             const result = await response.json();
 
             if (result.success) {
-                // Atualiza a lista de usuários
+                // Atualiza a lista de animais
                 setAnimais((prevAnimais) =>
                     prevAnimais.filter((animal) => animal.id !== id)
                 );
@@ -94,7 +95,7 @@ export function TabelaAnimais({ session }: Props) {
                     variant: "success",
                 });
             } else {
-                console.error("Erro ao deletar usuário:", result.message);
+                console.error("Erro ao deletar animal:", result.message);
                 toast({
                     title: "Erro",
                     description: result.message,
@@ -102,13 +103,18 @@ export function TabelaAnimais({ session }: Props) {
                 });
             }
         } catch (error) {
-            console.error("Erro ao deletar usuário:", error);
+            console.error("Erro ao deletar animal:", error);
         }
     };
 
-    const handleEdit = async (id: number) => {
-        
+    const handleEditOpen = (animal: Animal) => {
+        setEspecie(animal.especie);
+        setBrinco(animal.brinco);
+        setPeso(animal.peso);
+        setEditingAnimal(animal); // Armazena o animal que está sendo editado
+    };
 
+    const handleEdit = async (id: number) => {
         try {
             const response = await fetch("/api/editAnimal", {
                 method: "POST",
@@ -121,15 +127,13 @@ export function TabelaAnimais({ session }: Props) {
             const result = await response.json();
 
             if (result.success) {
-                setAnimais((prevAnimais) =>
-                    prevAnimais.map((animal) =>
-                        animal.id === id ? { ...animal} : animal
-                    )
-                );
+                // Recarrega a lista de animais após a edição
+                fetchAnimais();
 
                 setEspecie("");
                 setBrinco("");
                 setPeso(0);
+                setEditingAnimal(null); // Limpa o animal em edição
 
                 toast({
                     title: result.message,
@@ -137,7 +141,7 @@ export function TabelaAnimais({ session }: Props) {
                     variant: "success",
                 });
             } else {
-                console.error("Erro ao editar usuário:", result.message);
+                console.error("Erro ao editar animal:", result.message);
                 toast({
                     title: "Erro",
                     description: result.message,
@@ -146,32 +150,9 @@ export function TabelaAnimais({ session }: Props) {
                 });
             }
         } catch (error) {
-            console.error("Erro ao editar usuário:", error);
+            console.error("Erro ao editar animal:", error);
         }
     };
-
-    const Editar = (
-        <>
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button variant="outline">Edit Profile</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Edit profile</DialogTitle>
-                        <DialogDescription>
-                            Make changes to your profile here. Click save when
-                            you're done.
-                        </DialogDescription>
-                    </DialogHeader>
-
-                    <DialogFooter>
-                        <Button type="submit">Save changes</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
-        </>
-    );
 
     return (
         <>
@@ -182,12 +163,13 @@ export function TabelaAnimais({ session }: Props) {
                         <TableHead>Espécie</TableHead>
                         <TableHead>Brinco</TableHead>
                         <TableHead>Peso</TableHead>
-                       
-
+                        <TableHead>Data Desmame</TableHead>
+                        <TableHead>Data Nascimento</TableHead>
+                        <TableHead>Data Registro</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {animalList.map((item, key) => (
+                    {animalList.map((item) => (
                         <TableRow key={item.id}>
                             <TableCell className="font-medium">
                                 {item.id}
@@ -195,26 +177,44 @@ export function TabelaAnimais({ session }: Props) {
                             <TableCell>{item.especie}</TableCell>
                             <TableCell>{item.brinco}</TableCell>
                             <TableCell>{item.peso}</TableCell>
-                            
-                           
+                            <TableCell>
+                                {format(
+                                    new Date(item.datadesmame),
+                                    "dd-MM-yyyy"
+                                )}
+                            </TableCell>
+                            <TableCell>
+                                {format(
+                                    new Date(item.datanascimento),
+                                    "dd-MM-yyyy"
+                                )}
+                            </TableCell>
+                            <TableCell>
+                                {format(
+                                    new Date(item.dataregistro),
+                                    "dd-MM-yyyy HH:mm"
+                                )}
+                            </TableCell>
+
                             <TableCell className="text-right">
-                                {/*---------------------EDITAR---------------------------*/}
                                 <Dialog>
                                     <DialogTrigger asChild>
-                                        <Button className="editIcon mr-2"></Button>
+                                        <Button
+                                            className="editIcon mr-2"
+                                            onClick={() => handleEditOpen(item)}
+                                        ></Button>
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[425px]">
                                         <DialogHeader>
                                             <DialogTitle>
-                                                Editar Animal - {item.especie} - {item.brinco} 
+                                                Editar Animal - {item.especie} -{" "}
+                                                {item.brinco}
                                             </DialogTitle>
-                                            <DialogDescription></DialogDescription>
                                         </DialogHeader>
                                         <div>
                                             <Label>Especie</Label>
                                             <Input
                                                 type="text"
-                                                placeholder=""
                                                 value={Especie}
                                                 onChange={(e) =>
                                                     setEspecie(e.target.value)
@@ -225,7 +225,6 @@ export function TabelaAnimais({ session }: Props) {
                                             <Label>Brinco</Label>
                                             <Input
                                                 type="text"
-                                                placeholder=""
                                                 value={Brinco}
                                                 onChange={(e) =>
                                                     setBrinco(e.target.value)
@@ -233,13 +232,14 @@ export function TabelaAnimais({ session }: Props) {
                                                 className="mb-3"
                                             />
 
-                                              <Label>Peso</Label>
+                                            <Label>Peso</Label>
                                             <Input
                                                 type="number"
-                                                placeholder=""
                                                 value={Peso}
                                                 onChange={(e) =>
-                                                    setPeso(parseInt(e.target.value))
+                                                    setPeso(
+                                                        parseInt(e.target.value)
+                                                    )
                                                 }
                                                 className="mb-3"
                                             />
@@ -253,17 +253,16 @@ export function TabelaAnimais({ session }: Props) {
                                                         setEspecie("");
                                                         setBrinco("");
                                                         setPeso(0);
+                                                        setEditingAnimal(null);
                                                     }}
                                                 >
                                                     Cancelar
                                                 </Button>
                                                 <Button
                                                     className="bg-[#1055DA] hover:bg-bg-[#1055DA] hover:opacity-90"
-                                                    onClick={() =>
-                                                        handleEdit(
-                                                            item.id
-                                                        )
-                                                    }
+                                                    onClick={() => {
+                                                        handleEdit(item.id);
+                                                    }}
                                                 >
                                                     Salvar
                                                 </Button>
@@ -271,8 +270,6 @@ export function TabelaAnimais({ session }: Props) {
                                         </DialogFooter>
                                     </DialogContent>
                                 </Dialog>
-
-                                {/*------------------------------------------------*/}
 
                                 <Button
                                     onClick={() => handleDelete(item.id)} // Passa o id aqui

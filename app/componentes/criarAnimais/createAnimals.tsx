@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 
 const FormSchema = z.object({
     especie: z.string().min(1, "").max(100),
-    brinco: z.number().min(1, ""),
+    brinco: z.string().min(1, ""),
     peso: z.number().min(1, "").max(10000),
     dataNascimento: z.any(),
     dataDesmame: z.any(),
@@ -33,8 +33,8 @@ export default function CreateUserForm() {
         resolver: zodResolver(FormSchema),
         defaultValues: {
             especie: "",
-            brinco: 0,
-            peso: 0,
+            brinco: undefined,
+            peso: undefined,
             dataNascimento: new Date(),
             dataDesmame: new Date(),
         },
@@ -112,14 +112,9 @@ export default function CreateUserForm() {
                             <FormLabel>Brinco</FormLabel>
                             <FormControl>
                                 <Input
-                                    type="number"
+                                    type="text"
                                     placeholder="Numero Brinco"
                                     {...field}
-                                    onChange={(event) =>
-                                        field.onChange(
-                                            parseInt(event.target.value)
-                                        )
-                                    }
                                 />
                             </FormControl>
                             <FormMessage />
@@ -199,7 +194,7 @@ export default function CreateUserForm() {
                 />
 
                 <Button type="submit" className="bg-[#1055DA] ">
-                    Criar Animal
+                    Adicionar
                 </Button>
             </form>
         </Form>

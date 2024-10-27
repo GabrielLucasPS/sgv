@@ -36,10 +36,10 @@ export interface Animal {
     id: number;
     especie: string;
     brinco: string;
-    dataNascimento: Date; // Opcional, se não for obrigatório
     peso: number; // Opcional, exemplo: 15.75
-    dataDesmame: Date; // Opcional, pode ser null
-    dataRegistro: Date;
+    datanascimento: Date; // Opcional, se não for obrigatório
+    datadesmame: Date; // Opcional, pode ser null
+    dataregistro: Date;
 }
 
 export interface JWTInterface {
