@@ -1,0 +1,8 @@
+CREATE TABLE Vacina (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL UNIQUE,
+    descricao VARCHAR(250),
+    intervalodose INTEGER NOT NULL,
+    fabricante VARCHAR(100) NOT NULL,
+    dataregistro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

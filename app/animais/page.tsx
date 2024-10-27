@@ -11,7 +11,7 @@ export default async function Usuarios() {
             <h1 className="sectionTitle"></h1>
 
             <div>
-                <h3 className="font-bold text-2xl mb-2">Adicionar Usuario</h3>
+                <h3 className="font-bold text-2xl mb-2">Adicionar Animal</h3>
                 <CreateAnimals />
             </div>
 

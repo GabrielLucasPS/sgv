@@ -42,6 +42,15 @@ export interface Animal {
     dataregistro: Date;
 }
 
+export type Vacina = {
+    id: number;
+    nome: string;
+    descricao?: string;
+    intervalodose: number;
+    fabricante: string;
+    dataregistro?: Date;
+};
+
 export interface JWTInterface {
     user: {
         id: number;

@@ -19,39 +19,37 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const FormSchema = z.object({
-    especie: z.string().min(1, "").max(100),
-    brinco: z.string().min(1, ""),
-    peso: z.number().min(1, "").max(10000),
-    dataNascimento: z.any(),
-    dataDesmame: z.any(),
+export const FormSchema = z.object({
+    nome: z.string().max(100),
+    descricao: z.string().max(250).optional(),
+    intervalodose: z.number(),
+    fabricante: z.string().max(100),
 });
-export default function CreateAnimaisForm() {
+
+export default function CreateVacinaForm() {
     const router = useRouter();
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            especie: "",
-            brinco: undefined,
-            peso: undefined,
-            dataNascimento: new Date(),
-            dataDesmame: new Date(),
+            nome: "",
+            descricao: "",
+            intervalodose: undefined,
+            fabricante: "",
         },
     });
 
     const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-        const response = await fetch("/api/createAnimal", {
+        const response = await fetch("/api/createVacina", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                especie: values.especie,
-                brinco: values.brinco,
-                peso: values.peso,
-                dataNascimento: values.dataNascimento,
-                dataDesmame: values.dataDesmame,
+                nome: values.nome,
+                descricao: values.descricao,
+                intervalodose: values.intervalodose,
+                fabricante: values.fabricante,
             }),
         });
 
@@ -74,10 +72,6 @@ export default function CreateAnimaisForm() {
         }
     };
 
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [senha, setSenha] = useState("");
-
     const { toast } = useToast();
 
     return (
@@ -88,14 +82,14 @@ export default function CreateAnimaisForm() {
             >
                 <FormField
                     control={form.control}
-                    name="especie"
+                    name="nome"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Especie</FormLabel>
+                            <FormLabel>Nome</FormLabel>
                             <FormControl>
                                 <Input
                                     type="text"
-                                    placeholder="Nome da especie"
+                                    placeholder="Nome da Vacina"
                                     {...field}
                                 />
                             </FormControl>
@@ -106,32 +100,14 @@ export default function CreateAnimaisForm() {
 
                 <FormField
                     control={form.control}
-                    name="brinco"
+                    name="intervalodose"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Brinco</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type="text"
-                                    placeholder="Numero Brinco"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    control={form.control}
-                    name="peso"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Peso</FormLabel>
+                            <FormLabel>Intervalo da Dose</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
-                                    placeholder="Peso"
+                                    placeholder="Intervalo"
                                     {...field}
                                     onChange={(event) =>
                                         field.onChange(
@@ -144,48 +120,37 @@ export default function CreateAnimaisForm() {
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     control={form.control}
-                    name="dataNascimento"
+                    name="fabricante"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Data Nascimento</FormLabel>
+                            <FormLabel>Fabricante</FormLabel>
                             <FormControl>
                                 <Input
-                                    type="date"
-                                    placeholder="Data Nascimento"
+                                    type="text"
+                                    placeholder="fabricante"
                                     {...field}
-                                    value={
-                                        field.value instanceof Date
-                                            ? field.value
-                                                  .toISOString()
-                                                  .split("T")[0]
-                                            : field.value
-                                    }
                                 />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+
                 <FormField
                     control={form.control}
-                    name="dataDesmame"
+                    name="descricao"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Data Desmame</FormLabel>
+                            <FormLabel>Descrição</FormLabel>
                             <FormControl>
                                 <Input
-                                    type="date"
-                                    placeholder="Data Desmame"
+                                    type="text"
+                                    placeholder="Descrição"
                                     {...field}
-                                    value={
-                                        field.value instanceof Date
-                                            ? field.value
-                                                  .toISOString()
-                                                  .split("T")[0]
-                                            : field.value
-                                    }
+                                    className="w-96 "
                                 />
                             </FormControl>
                             <FormMessage />

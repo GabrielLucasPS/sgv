@@ -73,6 +73,14 @@
     background-image: url("/usuariosAtivo.svg");
 }
 
+.vacinaIcon .img {
+    background-image: url("/vacina.svg");
+}
+
+.vacinaIcon.ativo .img {
+    background-image: url("/vacinaAtivo.svg");
+}
+
 .logoutIcon {
     margin-bottom: 0px !important;
 }
