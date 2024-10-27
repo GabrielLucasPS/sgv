@@ -4,6 +4,9 @@ import { compare } from "bcrypt";
 import { pool } from "@/lib/dbConnection";
 import { Usuario } from "@/lib/types/dbTypes";
 import { toast } from "@/hooks/use-toast";
+
+console.log("NEXTAUTH_SECRET:", process.env.NEXTAUTH_SECRET);
+
 const handler = nextAuth({
     session: {
         strategy: "jwt",

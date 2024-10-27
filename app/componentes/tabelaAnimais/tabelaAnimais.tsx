@@ -24,7 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "@/hooks/use-toast";
-import { User } from "@/lib/types/dbTypes";
+import { Animal } from "@/lib/types/dbTypes";
 import { Session } from "next-auth";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,17 +33,17 @@ interface Props {
 }
 
 export function TabelaAnimais({ session }: Props) {
-    const [userList, setUsers] = useState<User[]>([]); // Estado para armazenar os usuários
+    const [animalList, setAnimais] = useState<Animal[]>([]); // Estado para armazenar os usuários
     const [loading, setLoading] = useState<boolean>(true); // Estado de carregamento
     const [error, setError] = useState<string | null>(null); // Estado para erros
 
-    const [Nome, setNome] = useState<string>("");
-    const [Senha, setSenha] = useState<string>("");
-    const [confirmarSenha, setConfirmarSenha] = useState<string>("");
+    const [Especie, setEspecie] = useState<string>("");
+    const [Brinco, setBrinco] = useState<string>("");
+    const [Peso, setPeso] = useState<number>(0);
 
-    const fetchUsers = async () => {
+    const fetchAnimais = async () => {
         try {
-            const response = await fetch("/api/getAllUsers", {
+            const response = await fetch("/api/getAllAnimais", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export function TabelaAnimais({ session }: Props) {
             const data = await response.json();
 
             if (data.success) {
-                setUsers(data.Users); // Atualiza o estado com os usuários recebidos
+                setAnimais(data.Animais); // Atualiza o estado com os usuários recebidos
             } else {
                 setError("Nenhum usuário encontrado.");
             }
@@ -66,13 +66,13 @@ export function TabelaAnimais({ session }: Props) {
 
     // Usando useEffect para buscar os usuários quando o componente for montado
     useEffect(() => {
-        fetchUsers();
+        fetchAnimais();
     }, []);
 
     const handleDelete = async (id: number) => {
         console.log("ID: ", id);
         try {
-            const response = await fetch("/api/deleteUser", {
+            const response = await fetch("/api/deleteAnimal", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -84,8 +84,8 @@ export function TabelaAnimais({ session }: Props) {
 
             if (result.success) {
                 // Atualiza a lista de usuários
-                setUsers((prevUsers) =>
-                    prevUsers.filter((user) => user.id !== id)
+                setAnimais((prevAnimais) =>
+                    prevAnimais.filter((animal) => animal.id !== id)
                 );
 
                 toast({
@@ -106,41 +106,30 @@ export function TabelaAnimais({ session }: Props) {
         }
     };
 
-    const handleEdit = async (id: number, nomeAtual: string) => {
-        if (Senha.trim() != "" && confirmarSenha != Senha) {
-            setSenha("");
-            setConfirmarSenha("");
-            toast({
-                title: "Senhas incorretas",
-                duration: 2000,
-                variant: "destructive",
-            });
-            return;
-        }
+    const handleEdit = async (id: number) => {
+        
 
         try {
-            const response = await fetch("/api/editUser", {
+            const response = await fetch("/api/editAnimal", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ id, Nome, Senha, nomeAtual }),
+                body: JSON.stringify({ id, Especie, Brinco, Peso }),
             });
 
             const result = await response.json();
 
             if (result.success) {
-                // Atualiza a lista de usuários
-                let nomeLista: string = Nome ? Nome : nomeAtual;
-                setUsers((prevUsers) =>
-                    prevUsers.map((user) =>
-                        user.id === id ? { ...user, nome: nomeLista } : user
+                setAnimais((prevAnimais) =>
+                    prevAnimais.map((animal) =>
+                        animal.id === id ? { ...animal} : animal
                     )
                 );
 
-                setNome("");
-                setSenha("");
-                setConfirmarSenha("");
+                setEspecie("");
+                setBrinco("");
+                setPeso(0);
 
                 toast({
                     title: result.message,
@@ -190,25 +179,24 @@ export function TabelaAnimais({ session }: Props) {
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[100px]"></TableHead>
-                        <TableHead>Usuário</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead>Data de Criação</TableHead>
+                        <TableHead>Espécie</TableHead>
+                        <TableHead>Brinco</TableHead>
+                        <TableHead>Peso</TableHead>
+                       
+
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {userList.map((item, key) => (
+                    {animalList.map((item, key) => (
                         <TableRow key={item.id}>
                             <TableCell className="font-medium">
                                 {item.id}
                             </TableCell>
-                            <TableCell>{item.nome}</TableCell>
-                            <TableCell>{item.email}</TableCell>
-                            <TableCell>
-                                {format(
-                                    new Date(item.data_criacao),
-                                    "dd-MM-yyyy HH:mm"
-                                )}
-                            </TableCell>
+                            <TableCell>{item.especie}</TableCell>
+                            <TableCell>{item.brinco}</TableCell>
+                            <TableCell>{item.peso}</TableCell>
+                            
+                           
                             <TableCell className="text-right">
                                 {/*---------------------EDITAR---------------------------*/}
                                 <Dialog>
@@ -218,42 +206,40 @@ export function TabelaAnimais({ session }: Props) {
                                     <DialogContent className="sm:max-w-[425px]">
                                         <DialogHeader>
                                             <DialogTitle>
-                                                Editar Usuário - {item.nome}
+                                                Editar Animal - {item.especie} - {item.brinco} 
                                             </DialogTitle>
                                             <DialogDescription></DialogDescription>
                                         </DialogHeader>
                                         <div>
-                                            <Label>Nome</Label>
+                                            <Label>Especie</Label>
                                             <Input
                                                 type="text"
                                                 placeholder=""
-                                                value={Nome}
+                                                value={Especie}
                                                 onChange={(e) =>
-                                                    setNome(e.target.value)
+                                                    setEspecie(e.target.value)
                                                 }
                                                 className="mb-3"
                                             />
 
-                                            <Label>Nova Senha</Label>
+                                            <Label>Brinco</Label>
                                             <Input
-                                                type="password"
+                                                type="text"
                                                 placeholder=""
-                                                value={Senha}
+                                                value={Brinco}
                                                 onChange={(e) =>
-                                                    setSenha(e.target.value)
+                                                    setBrinco(e.target.value)
                                                 }
                                                 className="mb-3"
                                             />
 
-                                            <Label>Confirmar Senha</Label>
+                                              <Label>Peso</Label>
                                             <Input
-                                                type="password"
+                                                type="number"
                                                 placeholder=""
-                                                value={confirmarSenha}
+                                                value={Peso}
                                                 onChange={(e) =>
-                                                    setConfirmarSenha(
-                                                        e.target.value
-                                                    )
+                                                    setPeso(parseInt(e.target.value))
                                                 }
                                                 className="mb-3"
                                             />
@@ -264,9 +250,9 @@ export function TabelaAnimais({ session }: Props) {
                                                     variant="destructive"
                                                     className="mr-3"
                                                     onClick={() => {
-                                                        setNome("");
-                                                        setSenha("");
-                                                        setConfirmarSenha("");
+                                                        setEspecie("");
+                                                        setBrinco("");
+                                                        setPeso(0);
                                                     }}
                                                 >
                                                     Cancelar
@@ -275,8 +261,7 @@ export function TabelaAnimais({ session }: Props) {
                                                     className="bg-[#1055DA] hover:bg-bg-[#1055DA] hover:opacity-90"
                                                     onClick={() =>
                                                         handleEdit(
-                                                            item.id,
-                                                            item.nome
+                                                            item.id
                                                         )
                                                     }
                                                 >
