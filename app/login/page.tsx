@@ -2,10 +2,11 @@ import Image from "next/image";
 import LoginForm from "../componentes/loginForm/loginForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { primeiraEntrada } from "../actions";
 
 export default async function Login() {
     const session = await getServerSession();
-
+    primeiraEntrada();
     if (session) {
         redirect("/usuarios");
     }
