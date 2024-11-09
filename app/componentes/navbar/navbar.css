@@ -57,6 +57,10 @@
     background-image: url("/registros.svg");
 }
 
+.registrosIcon.ativo .img {
+    background-image: url("/registrosAtivo.svg");
+}
+
 .animaisIcon .img {
     background-image: url("/animais.svg");
 }

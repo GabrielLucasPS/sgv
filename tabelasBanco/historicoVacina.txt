@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS public.historicoVacina
+(
+    id SERIAL PRIMARY KEY,
+    animal_id INTEGER NOT NULL,
+    vacina_id INTEGER NOT NULL,
+    data_vacinacao TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    dosagem INTEGER NOT NULL,
+    intervalo_proxima_dose INTERVAL, -- em vez de data fixa, usa intervalo ajustável
+    status VARCHAR(20) DEFAULT 'pendente', -- 'pendente', 'realizada', 'atrasada', etc.
+    observacao VARCHAR(250),
+    reacao_adversa VARCHAR(250), -- registro de possíveis reações adversas
+    responsavel_id INTEGER, -- ID do veterinário ou operador responsável
+    
+    CONSTRAINT fk_animal FOREIGN KEY (animal_id)
+        REFERENCES public.animal (id) ON DELETE CASCADE,
+    
+    CONSTRAINT fk_vacina FOREIGN KEY (vacina_id)
+        REFERENCES public.vacina (id) ON DELETE CASCADE
+);

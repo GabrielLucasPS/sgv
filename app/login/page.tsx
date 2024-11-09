@@ -13,13 +13,7 @@ export default async function Login() {
 
     return (
         <main className="LoginPage">
-            <div className="loginLeft">
-                <h1>COLOCAR ALGO LEGAL AQUI:</h1>
-                <h2></h2>
-                <div>
-                    <button className="btn "></button>
-                </div>
-            </div>
+            <div className="loginLeft"></div>
             <div className="loginRight">
                 <div className="loginContainer">
                     <Image

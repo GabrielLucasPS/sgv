@@ -20,7 +20,7 @@ import { signIn } from "next-auth/react";
 // Schema de validação do Zod
 const FormSchema = z.object({
     email: z.string().min(1, "Email é obrigatório").email("Email inválido"),
-    senha: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+    senha: z.string().min(6, "Senha incorreta"),
 });
 
 export default function LoginForm() {

@@ -21,7 +21,14 @@ const Navbar = () => {
                     <div className="img"></div>
                 </Link>
 
-                <Link href="/" className="menuBtn  registrosIcon">
+                <Link
+                    href="/historico"
+                    className={
+                        pathname == "/historico"
+                            ? "menuBtn  registrosIcon ativo "
+                            : "menuBtn  registrosIcon"
+                    }
+                >
                     <div className="img"></div>
                 </Link>
 
@@ -59,7 +66,10 @@ const Navbar = () => {
                 </Link>
             </div>
             <div>
-                <div onClick={() => signOut()} className="menuBtn logoutIcon">
+                <div
+                    onClick={() => signOut()}
+                    className="menuBtn logoutIcon cursor-pointer"
+                >
                     <div className="img"></div>
                 </div>
             </div>

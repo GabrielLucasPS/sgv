@@ -51,6 +51,19 @@ export type Vacina = {
     dataregistro?: Date;
 };
 
+type HistoricoVacina = {
+    id: number;
+    animalId: number;
+    vacinaId: number;
+    dataVacinacao: Date;
+    dosagem: number;
+    intervaloProximaDose?: string; // usando string para o intervalo (ex: "30 days")
+    status: "pendente" | "realizada" | "atrasada";
+    observacao?: string;
+    reacaoAdversa?: string;
+    responsavelId?: number;
+};
+
 export interface JWTInterface {
     user: {
         id: number;
