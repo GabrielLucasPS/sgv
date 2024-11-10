@@ -51,7 +51,7 @@ export type Vacina = {
     dataregistro?: Date;
 };
 
-type HistoricoVacina = {
+export type HistoricoVacina = {
     id: number;
     animalId: number;
     vacinaId: number;

@@ -2,3 +2,24 @@
     padding: 1vw;
     width: 100%;
 }
+
+.historicos_page {
+    padding: 1vw;
+    width: 100%;
+    min-height: 100%;
+
+    gap: 2%;
+}
+
+.historicos_page .criarHistoricoContainer {
+    max-height: 20%;
+}
+
+.historicos_page .TabelaHistoricoContainer {
+    max-height: 78%;
+    overflow-y: auto;
+}
+
+.historicos_page .historicoTitle {
+    justify-items: 8%;
+}
