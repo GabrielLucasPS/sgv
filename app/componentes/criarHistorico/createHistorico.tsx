@@ -36,14 +36,9 @@ import { cn } from "@/lib/utils";
 import { Animal, Vacina } from "@/lib/types/dbTypes";
 
 export const FormSchema = z.object({
-    aninalId: z.number(),
-    vacinaId: z.number(),
-    dataVacinacao: z.date(),
-    dosagem: z.number(),
-    intervaloProximaDose: z.string().optional(), // intervalo como string (ex: "30 dias")
-    // status: z.enum(["pendente", "realizada", "atrasada"]),
+    dataVacinacao: z.any(),
+    dosagem: z.number().min(1, "Forneça a dosagem"),
     observacao: z.string().max(250).optional(),
-    reacaoAdversa: z.string().max(250).optional(),
 });
 
 type selectList = {
@@ -59,14 +54,14 @@ export default function CreateHistoricoForm() {
     const [animalBrinco, setAnimalBrinco] = useState("");
     const [animalId, setAnimalId] = useState<number | undefined>();
     const [animalList, setAnimalList] = useState<selectList[]>([]);
+    // ABRIR SELEÇÃO DE ANIMAL
+    const [open, setOpen] = useState(false);
 
     // -- SELEÇÃO DE VACINA
     const [vacinaNome, setVacinaNome] = useState("");
     const [vacinaId, setVacinaId] = useState<number | undefined>();
     const [vacinaList, setVacinaList] = useState<selectList[]>([]);
-
-    const [open, setOpen] = useState(false);
-
+    // ABRIR SELEÇÃO DE VACINA
     const [openVacina, setOpenVacina] = useState(false);
 
     async function fetchAnimais() {
@@ -134,23 +129,26 @@ export default function CreateHistoricoForm() {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            aninalId: animalId,
-            vacinaId: vacinaId,
             dataVacinacao: new Date(),
             dosagem: undefined,
-            intervaloProximaDose: "",
             observacao: "",
-            reacaoAdversa: "",
         },
     });
 
     const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-        const response = await fetch("/api/createHistoricoVacina", {
+        console.log("Entrou");
+        const response = await fetch("/api/createHistorico", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(values),
+            body: JSON.stringify({
+                animalId: animalId,
+                vacinaId: vacinaId,
+                dataVacinacao: values.dataVacinacao,
+                dosagem: values.dosagem,
+                observacao: values.observacao,
+            }),
         });
 
         const result = await response.json();
@@ -305,7 +303,7 @@ export default function CreateHistoricoForm() {
                                                                 : currentValue
                                                         );
                                                         const vacina =
-                                                            animalList.find(
+                                                            vacinaList.find(
                                                                 (item) =>
                                                                     item.label ===
                                                                     currentValue
@@ -368,31 +366,17 @@ export default function CreateHistoricoForm() {
                     name="dosagem"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Dosagem</FormLabel>
+                            <FormLabel>Dosagem (ml)</FormLabel>
                             <FormControl>
                                 <Input
                                     type="number"
                                     placeholder="Dosagem"
                                     {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                {/* Campo para Intervalo da Próxima Dose */}
-                <FormField
-                    control={form.control}
-                    name="intervaloProximaDose"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Intervalo da Próxima Dose</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type="text"
-                                    placeholder="Ex: 30 days"
-                                    {...field}
+                                    onChange={(event) =>
+                                        field.onChange(
+                                            parseFloat(event.target.value)
+                                        )
+                                    }
                                 />
                             </FormControl>
                             <FormMessage />
@@ -411,25 +395,6 @@ export default function CreateHistoricoForm() {
                                 <Input
                                     type="text"
                                     placeholder="Observação"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                {/* Campo para Reação Adversa */}
-                <FormField
-                    control={form.control}
-                    name="reacaoAdversa"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Reação Adversa</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type="text"
-                                    placeholder="Reação Adversa"
                                     {...field}
                                 />
                             </FormControl>

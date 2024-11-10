@@ -57,11 +57,10 @@ type HistoricoVacina = {
     vacinaId: number;
     dataVacinacao: Date;
     dosagem: number;
-    intervaloProximaDose?: string; // usando string para o intervalo (ex: "30 days")
+    intervaloProximaDose?: number; // usando string para o intervalo (ex: "30 (Dias)")
     status: "pendente" | "realizada" | "atrasada";
     observacao?: string;
-    reacaoAdversa?: string;
-    responsavelId?: number;
+    dataregistro?: Date;
 };
 
 export interface JWTInterface {

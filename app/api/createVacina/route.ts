@@ -27,13 +27,13 @@ export async function POST(req: Request) {
 
         if (nome && intervalodose && fabricante && descricao) {
             try {
-                const animalExistente = await pool.query<Vacina>(
+                const vacinaExistente = await pool.query<Vacina>(
                     `SELECT id,nome FROM vacina WHERE nome = $1`,
                     [nome]
                 );
 
                 // Vacina exsite?
-                if (animalExistente.rows.length === 0) {
+                if (vacinaExistente.rows.length === 0) {
                     await pool.query(
                         `INSERT INTO vacina (nome, intervalodose, fabricante, descricao,dataRegistro)
                          VALUES ($1, $2, $3, $4, $5)
