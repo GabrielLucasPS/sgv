@@ -348,10 +348,11 @@ export default function CreateHistoricoForm() {
                                     type="date"
                                     {...field}
                                     value={
-                                        field.value?.toISOString().split("T")[0]
-                                    }
-                                    onChange={(e) =>
-                                        field.onChange(new Date(e.target.value))
+                                        field.value instanceof Date
+                                            ? field.value
+                                                  .toISOString()
+                                                  .split("T")[0]
+                                            : field.value
                                     }
                                 />
                             </FormControl>

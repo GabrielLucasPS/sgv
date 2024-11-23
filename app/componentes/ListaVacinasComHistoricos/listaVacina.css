@@ -1,0 +1,85 @@
+/* verde = #26c602*/
+
+.VacinasContainer {
+    display: flex;
+    gap: 2%;
+    margin-bottom: 10px;
+    overflow: hidden;
+    padding: 1vw;
+
+    align-items: center;
+
+    background-color: #f5f5f5;
+    border-radius: 0.6vw;
+}
+.vacinaContainer {
+    min-width: 20vw;
+    max-width: 20vw;
+    height: 11vw;
+
+    background-color: #26c602;
+    box-shadow: 0vw 0.1vw 0.1vw rgba(000, 000, 000, 0.25);
+    border-radius: 0.4vw;
+    padding: 0.5vw;
+
+    color: #fff;
+}
+.historicosListContainer {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    width: 100%;
+    padding: 1vw;
+}
+
+.historicosListContainer {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.historicoContainer {
+    background-color: #fff;
+    box-shadow: 0vw 0.1vw 0.1vw rgba(000, 000, 000, 0.25);
+
+    border-radius: 0.4vw;
+    padding: 0.5vw;
+    display: flex;
+
+    min-width: 20vw;
+    max-width: 20vw;
+    height: 11vw;
+
+    overflow: hidden;
+
+    margin-right: 2%;
+}
+
+.historicoTitle {
+    color: #26c602;
+    font-size: 1vw;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 15%;
+    width: 100%;
+}
+
+.historicoStatus {
+    width: 1vw;
+    height: 1vw;
+    border-radius: 1000px;
+}
+
+.status-pendente {
+    background-color: #f17d40;
+}
+.status-realizada {
+    background-color: #26c602;
+}
+.status-atrasada {
+    background-color: #f53b3b;
+}

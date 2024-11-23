@@ -55,7 +55,7 @@ export type HistoricoVacina = {
     id: number;
     animalId: number;
     vacinaId: number;
-    dataVacinacao: Date;
+    data_vacinacao: Date;
     dosagem: number;
     intervaloProximaDose?: number; // usando string para o intervalo (ex: "30 (Dias)")
     status: "pendente" | "realizada" | "atrasada";

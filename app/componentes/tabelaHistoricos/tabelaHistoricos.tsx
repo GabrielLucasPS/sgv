@@ -30,29 +30,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import "./tabelaHistoricos.css";
-import { getAnimalComHistorico, getAnimalHistorico } from "@/lib/utils";
+import { getVacinasHistorico } from "@/lib/utils";
+import ListaVacinasComHistoricos from "../ListaVacinasComHistoricos/ListaVacinasComHistoricos";
 
 interface Props {
     session: Session | null;
 }
 
 export function TabelaHistoricos() {
-    const [animais, setAnimais] = useState<Animal[]>([]);
+    const [vacinas, setVacina] = useState<Vacina[]>([]);
     const [historicos, setHistoricos] = useState<HistoricoVacina[]>([]);
 
-    const getAnimais = async () => {
-        const Animais = getAnimalComHistorico();
-        setAnimais(await Animais);
+    const getVacinas = async () => {
+        const newVacinas = getVacinasHistorico();
+        setVacina(await newVacinas);
     };
 
     useEffect(() => {
-        getAnimais();
+        getVacinas();
     }, []);
 
     return (
         <div className="historicosContainer">
-            {animais.map((item) => (
-                <div>{item.brinco}</div>
+            {vacinas.map((vacina) => (
+                <ListaVacinasComHistoricos vacina={vacina} />
             ))}
         </div>
     );

@@ -72,6 +72,7 @@ export async function POST(req: Request) {
                 );
             }
 
+            var newInicioDataVacinaca = startOfDay(inicioDataVacinaca);
             await pool.query(
                 `INSERT INTO historicovacina(animal_id, vacina_id, data_vacinacao, dosagem, intervalo_proxima_dose, observacao)
                  VALUES ($1, $2, $3, $4, $5, $6)
@@ -79,7 +80,7 @@ export async function POST(req: Request) {
                 [
                     animalId,
                     vacinaId,
-                    inicioDataVacinaca,
+                    newInicioDataVacinaca,
                     dosagem,
                     intervalodose,
                     observacao,
