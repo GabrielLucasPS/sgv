@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { HistoricoVacina } from "@/lib/types/dbTypes";
 import "./listaVacina.css";
-import { format } from "date-fns";
+import { addDays, format } from "date-fns";
 import { useDraggable } from "react-use-draggable-scroll";
 import AnimalDoHistorico from "../animalDoHistorico/animalDoHistorico";
 
@@ -44,7 +44,9 @@ const ListaVacinasComHistoricos: React.FC<Props> = ({ vacina }) => {
         <div>
             <div key={vacina.id} className="VacinasContainer">
                 <div className="vacinaContainer">
-                    <h2>{vacina.nome}</h2>
+                    <h2>
+                        <strong className="text-[1.2vw] ">{vacina.nome}</strong>
+                    </h2>
                     <p>{vacina.descricao || "Sem descrição disponível"}</p>
                     <p>
                         <strong>Fabricante:</strong> {vacina.fabricante}
@@ -78,7 +80,41 @@ const ListaVacinasComHistoricos: React.FC<Props> = ({ vacina }) => {
                                         ></div>
                                     </div>
                                 </div>
-                                <div></div>
+                                <div className="historicoContent">
+                                    <div className="contentText">
+                                        <span>Dosagem:</span>
+                                        <span>{historico.dosagem} ml</span>
+                                    </div>
+
+                                    <div className="contentText">
+                                        <span>Proxíma dose:</span>
+                                        <span>
+                                            {format(
+                                                addDays(
+                                                    new Date(
+                                                        historico.data_vacinacao
+                                                    ),
+                                                    historico.intervalo_proxima_dose
+                                                        ? historico.intervalo_proxima_dose
+                                                        : 0
+                                                ),
+                                                "dd-MM-yyyy"
+                                            )}
+                                        </span>
+                                    </div>
+
+                                    <div className="contentText">
+                                        <span>Intervalo entre doses:</span>
+                                        <span>
+                                            {historico.intervalo_proxima_dose}{" "}
+                                            Dias
+                                        </span>
+                                    </div>
+
+                                    <div className="observacaoContent">
+                                        Observação: {historico.observacao}
+                                    </div>
+                                </div>
                                 {/* <p>
                                     <strong>Data:</strong>{" "}
                                     {format(
