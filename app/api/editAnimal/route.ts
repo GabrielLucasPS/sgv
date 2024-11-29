@@ -20,12 +20,12 @@ export async function POST(request: Request) {
     if (Especie) {
         queryParts.push(` especie = $${counter++}`);
         values.push(Especie);
-    } 
+    }
 
     if (Brinco) {
         queryParts.push(` brinco = $${counter++}`);
         values.push(Brinco);
-    } 
+    }
 
     if (Peso) {
         queryParts.push(` peso = $${counter++}`);
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
         query += queryParts.join(",");
         query += ` WHERE id = $${counter}`;
         values.push(id);
-        console.log(query)
+        console.log(query);
         await pool.query(query, values);
 
         return NextResponse.json({

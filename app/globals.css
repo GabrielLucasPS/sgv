@@ -218,3 +218,8 @@ body {
 .editIcon:hover {
     background-color: #e8e8e8 !important;
 }
+
+.inputNovaDataVacinacao {
+    border: 0.1vw solid #ccc;
+    padding: 0.5vw;
+}

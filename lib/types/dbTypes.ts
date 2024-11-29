@@ -61,6 +61,7 @@ export type HistoricoVacina = {
     status: "pendente" | "realizada" | "atrasada";
     observacao?: string;
     dataregistro?: Date;
+    dataultimavacina: Date;
 };
 
 export interface JWTInterface {

@@ -2,7 +2,6 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Animal, HistoricoVacina, Vacina } from "./types/dbTypes";
 import { json } from "stream/consumers";
-
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
@@ -151,5 +150,31 @@ export async function getVacinasHistorico() {
         console.error("Erro:", err);
 
         return vazio;
+    }
+}
+
+export async function atualizarDataHistorico(dataVacina: Date, id: number) {
+    try {
+        const response = await fetch("/api/editHistoricoVacina", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                data: dataVacina,
+                id: id,
+            }),
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            console.error("Alterou:", data.message);
+            return true;
+        } else {
+            return false;
+        }
+    } catch (err) {
+        console.error("Erro:", err);
+        return false;
     }
 }
