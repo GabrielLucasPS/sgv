@@ -74,7 +74,7 @@ export async function POST(req: Request) {
 
             var newInicioDataVacinaca = startOfDay(inicioDataVacinaca);
             await pool.query(
-                `INSERT INTO historicovacina(animal_id, vacina_id, data_vacinacao, dosagem, intervalo_proxima_dose, observacao)
+                `INSERT INTO historicovacina(animal_id, vacina_id, data_vacinacao, dosagem, intervalo_proxima_dose, observacao,dataultimavacina)
                  VALUES ($1, $2, $3, $4, $5, $6)
                  RETURNING *`,
                 [
@@ -84,6 +84,7 @@ export async function POST(req: Request) {
                     dosagem,
                     intervalodose,
                     observacao,
+                    newInicioDataVacinaca,
                 ]
             );
             console.log("Historico adicionado.");

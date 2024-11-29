@@ -16,3 +16,7 @@ CREATE TABLE IF NOT EXISTS public.historicoVacina
     CONSTRAINT fk_vacina FOREIGN KEY (vacina_id)
         REFERENCES public.vacina (id) ON DELETE CASCADE
 );
+
+
+ALTER TABLE public.historicovacina
+ADD COLUMN dataUltimaVacina timestamp without time zone;
