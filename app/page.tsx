@@ -1,9 +1,10 @@
 import Image from "next/image";
+import { Calendario } from "./componentes/calendario/Calendario";
 
 export default async function Home() {
     return (
-        <>
-            <h1 className="text-9xl">HOME</h1>
-        </>
+        <div className="homeContainer">
+            <Calendario />
+        </div>
     );
 }

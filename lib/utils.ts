@@ -178,3 +178,25 @@ export async function atualizarDataHistorico(dataVacina: Date, id: number) {
         return false;
     }
 }
+
+export async function getAllHistoricos() {
+    const vazio: HistoricoVacina[] = [];
+    try {
+        const response = await fetch("/api/getAllHistoricos", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            return data.eventos;
+        } else {
+            return data.eventos;
+        }
+    } catch (err) {
+        console.error("Erro:", err);
+        return vazio;
+    }
+}

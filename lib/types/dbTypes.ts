@@ -64,6 +64,14 @@ export type HistoricoVacina = {
     dataultimavacina: Date;
 };
 
+export type calendario = {
+    id: number;
+    animal_id: number;
+    vacina_id: number;
+    dataultimavacina: Date;
+    vacinaNome: String;
+};
+
 export interface JWTInterface {
     user: {
         id: number;
