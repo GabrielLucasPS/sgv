@@ -3,262 +3,263 @@
 @tailwind utilities;
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .homeContainer {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+	width: 100%;
+	height: 100vh;
+	overflow-y: hidden;
+	padding: 0.5vw;
 }
 
 .calendarioContainer {
-    width: 100%;
-    max-height: 100%;
+	width: 100%;
+	max-height: 100%;
 }
 
 .fc-header-toolbar {
-    height: 20% !important;
-    margin-bottom: 0px !important;
+	height: 20% !important;
+	margin-bottom: 1vw !important;
 }
 
 .fc-scrollgrid-sync-table,
 .fc-daygrid-body {
-    height: 80% !important;
+	height: 75% !important;
 }
 
 .fc-h-event {
-    background-color: #26c602;
-    border: 1px solid #26c602;
-    display: block;
-    font-weight: bold;
+	background-color: #26c602;
+	border: 1px solid #26c602;
+	display: block;
+	font-weight: bold;
 }
 
 .fc .fc-button-primary {
-    background-color: #26c602 !important;
-    border: none;
+	background-color: #26c602 !important;
+	border: none;
 }
 
 .fc .fc-button-primary:hover {
-    background-color: #26c602 !important;
-    border: none;
-    opacity: 0.8;
+	background-color: #26c602 !important;
+	border: none;
+	opacity: 0.8;
 }
 
 @layer utilities {
-    .text-balance {
-        text-wrap: balance;
-    }
+	.text-balance {
+		text-wrap: balance;
+	}
 }
 
 @layer base {
-    :root {
-        --background: 0 0% 100%;
-        --foreground: 240 10% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 240 10% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 240 10% 3.9%;
-        --primary: 240 5.9% 10%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 240 4.8% 95.9%;
-        --secondary-foreground: 240 5.9% 10%;
-        --muted: 240 4.8% 95.9%;
-        --muted-foreground: 240 3.8% 46.1%;
-        --accent: 240 4.8% 95.9%;
-        --accent-foreground: 240 5.9% 10%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 5.9% 90%;
-        --input: 240 5.9% 90%;
-        --ring: 240 10% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
-    }
-    .dark {
-        --background: 240 10% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 240 10% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 240 10% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 240 5.9% 10%;
-        --secondary: 240 3.7% 15.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 240 3.7% 15.9%;
-        --muted-foreground: 240 5% 64.9%;
-        --accent: 240 3.7% 15.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 3.7% 15.9%;
-        --input: 240 3.7% 15.9%;
-        --ring: 240 4.9% 83.9%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-    }
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 240 10% 3.9%;
+		--card: 0 0% 100%;
+		--card-foreground: 240 10% 3.9%;
+		--popover: 0 0% 100%;
+		--popover-foreground: 240 10% 3.9%;
+		--primary: 240 5.9% 10%;
+		--primary-foreground: 0 0% 98%;
+		--secondary: 240 4.8% 95.9%;
+		--secondary-foreground: 240 5.9% 10%;
+		--muted: 240 4.8% 95.9%;
+		--muted-foreground: 240 3.8% 46.1%;
+		--accent: 240 4.8% 95.9%;
+		--accent-foreground: 240 5.9% 10%;
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 0 0% 98%;
+		--border: 240 5.9% 90%;
+		--input: 240 5.9% 90%;
+		--ring: 240 10% 3.9%;
+		--chart-1: 12 76% 61%;
+		--chart-2: 173 58% 39%;
+		--chart-3: 197 37% 24%;
+		--chart-4: 43 74% 66%;
+		--chart-5: 27 87% 67%;
+		--radius: 0.5rem;
+	}
+	.dark {
+		--background: 240 10% 3.9%;
+		--foreground: 0 0% 98%;
+		--card: 240 10% 3.9%;
+		--card-foreground: 0 0% 98%;
+		--popover: 240 10% 3.9%;
+		--popover-foreground: 0 0% 98%;
+		--primary: 0 0% 98%;
+		--primary-foreground: 240 5.9% 10%;
+		--secondary: 240 3.7% 15.9%;
+		--secondary-foreground: 0 0% 98%;
+		--muted: 240 3.7% 15.9%;
+		--muted-foreground: 240 5% 64.9%;
+		--accent: 240 3.7% 15.9%;
+		--accent-foreground: 0 0% 98%;
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 0 0% 98%;
+		--border: 240 3.7% 15.9%;
+		--input: 240 3.7% 15.9%;
+		--ring: 240 4.9% 83.9%;
+		--chart-1: 220 70% 50%;
+		--chart-2: 160 60% 45%;
+		--chart-3: 30 80% 55%;
+		--chart-4: 280 65% 60%;
+		--chart-5: 340 75% 55%;
+	}
 }
 
 @layer base {
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
 }
 
 .btn,
 .bg-\[\#1055DA\] {
-    background-color: #26c602 !important;
+	background-color: #26c602 !important;
 }
 
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #fff;
-    border-radius: 2px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: #fff;
+	border-radius: 2px;
 }
 
 ::-webkit-scrollbar {
-    width: 2px;
-    height: 0.4vw;
-    background-color: #fff;
+	width: 2px;
+	height: 0.4vw;
+	background-color: #fff;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-image: linear-gradient(
-        to top,
-        #26c602 20%,
-        #219108 30%,
-        #0f5001 80%
-    );
+	border-radius: 10px;
+	background-image: linear-gradient(
+		to top,
+		#26c602 20%,
+		#219108 30%,
+		#0f5001 80%
+	);
 }
 
 .sgv-Toast .sgv-ToastClose svg {
-    color: #fff;
+	color: #fff;
 }
 
 .LoginPage {
-    background-color: white;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
+	background-color: white;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
 
-    display: flex;
+	display: flex;
 }
 
 .LoginPage .loginLeft {
-    flex: 1.3;
-    background-image: url("/fotoinicial.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+	flex: 1.3;
+	background-image: url("/fotoinicial.png");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .LoginPage .loginRight {
-    flex: 1;
-    position: fixed;
-    width: 100%;
-    height: 100%;
+	flex: 1;
+	position: fixed;
+	width: 100%;
+	height: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
 .loginRight .loginContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 500px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 500px;
 
-    padding: 1vw;
-    border-radius: 0.6vw;
+	padding: 1vw;
+	border-radius: 0.6vw;
 
-    background: rgba(255, 255, 255, 0.5);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+	background: rgba(255, 255, 255, 0.5);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(5px);
+	border: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 .loginRight .loginContainer * {
-    font-size: 1.5vw;
+	font-size: 1.5vw;
 }
 
 .loginRight .loginContainer button {
-    color: #fff;
-    font-size: 1vw;
-    background-color: #000;
-    padding: 1vw;
+	color: #fff;
+	font-size: 1vw;
+	background-color: #000;
+	padding: 1vw;
 }
 
 .loginRight .loginContainer input {
-    color: #000;
-    font-size: 1vw;
-    padding: 1vw;
-    border: 1px solid #000;
+	color: #000;
+	font-size: 1vw;
+	padding: 1vw;
+	border: 1px solid #000;
 }
 
 .LoginPage .logo {
-    border-radius: 0.6vw;
-    background-color: black;
-    margin-bottom: 2vw;
+	border-radius: 0.6vw;
+	background-color: black;
+	margin-bottom: 2vw;
 
-    width: 6vw;
+	width: 6vw;
 }
 
 .loginFormContainer {
-    width: 100%;
+	width: 100%;
 }
 
 .loginFormContainer .text-destructive {
-    font-size: 1vw;
-    color: #000;
+	font-size: 1vw;
+	color: #000;
 }
 .loginFormContainer p.text-destructive {
-    font-size: 0.7vw;
-    color: #df0808;
+	font-size: 0.7vw;
+	color: #df0808;
 
-    border: 1px solid #df0808;
-    border-radius: 0.4vw;
-    padding: 0.4vw;
+	border: 1px solid #df0808;
+	border-radius: 0.4vw;
+	padding: 0.4vw;
 }
 .deleteIcon,
 .editIcon {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: auto;
 
-    background-color: transparent;
-    box-shadow: none;
+	background-color: transparent;
+	box-shadow: none;
 }
 
 .deleteIcon {
-    background-image: url("/delete.svg");
+	background-image: url("/delete.svg");
 }
 
 .editIcon {
-    background-image: url("/edit.svg");
+	background-image: url("/edit.svg");
 }
 
 .deleteIcon:hover,
 .editIcon:hover {
-    background-color: #e8e8e8 !important;
+	background-color: #e8e8e8 !important;
 }
 
 .inputNovaDataVacinacao {
-    border: 0.1vw solid #ccc;
-    padding: 0.5vw;
+	border: 0.1vw solid #ccc;
+	padding: 0.5vw;
 }
