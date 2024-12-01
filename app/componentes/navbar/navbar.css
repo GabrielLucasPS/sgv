@@ -11,6 +11,16 @@
     padding: 1vw 0;
 }
 
+.navbarContainer .iconsContainer {
+    /* 
+    height: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    */
+}
+
 .menuBtn {
     height: 2.5vw;
     width: 2.5vw;
@@ -19,6 +29,8 @@
     padding: 0.2vw;
 
     border-radius: 0.3vw;
+
+    /* margin-bottom: 2vw; */
 
     margin-bottom: 1vw;
 }

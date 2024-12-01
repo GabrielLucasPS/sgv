@@ -13,21 +13,24 @@ export async function GET(request: Request) {
                 historicovacina.animal_id,
                 historicovacina.vacina_id,
                 historicovacina.dataultimavacina,
-                v.nome AS vacinanome
+                v.nome AS vacinanome,
+				a.brinco as brinco
             FROM 
                 historicovacina
                 JOIN vacina AS v ON historicovacina.vacina_id = v.id
+				JOIN animal AS a ON historicovacina.animal_id = a.id
         `);
 
         const eventos = historicos.rows.map((row: any) => {
-            console.log("Linha do evento:", row);
             return {
                 title: row.vacinanome,
                 date: row.dataultimavacina.toISOString().split("T")[0],
+                id: row.id,
+                extendedProps: {
+                    description: row.brinco,
+                },
             };
         });
-
-        console.log("Eventos formatados:", eventos);
 
         return NextResponse.json({
             success: true,

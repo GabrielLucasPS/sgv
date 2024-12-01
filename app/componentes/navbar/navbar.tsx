@@ -9,7 +9,7 @@ const Navbar = () => {
 
     return (
         <nav className="navbarContainer">
-            <div>
+            <div className="iconsContainer">
                 <Link
                     href="/"
                     className={

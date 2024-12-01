@@ -7,21 +7,26 @@ import { getAllHistoricos } from "@/lib/utils";
 import { HistoricoVacina } from "@/lib/types/dbTypes";
 
 export function Calendario() {
-    // function renderEventContent() {
-    //     return (
-    //         <>
-    //             <b>dasdasd</b>
-    //             <i>asdasd</i>
-    //         </>
-    //     );
-    // }
+    async function renderEventContent(eventInfo: any) {
+        return (
+            <div className="pl-1 ">
+                <div>
+                    <strong>Vacina: </strong>
+                    {eventInfo.event.title}
+                </div>
+                <div>
+                    <strong>Animal: </strong>
+                    {eventInfo.event.extendedProps.description}
+                </div>
+            </div>
+        );
+    }
 
     const [eventos, setEventos] = useState([]);
 
     const getHistoricos = async () => {
         const eventos = await getAllHistoricos();
         setEventos(eventos);
-        console.log("", eventos);
     };
 
     useEffect(() => {
@@ -35,6 +40,7 @@ export function Calendario() {
                 initialView="dayGridMonth"
                 events={eventos}
                 locale="pt-br"
+                eventContent={renderEventContent}
             />
         </div>
     );
