@@ -6,19 +6,18 @@ import { startOfDay, subHours } from "date-fns";
 import { revalidatePath } from "next/cache";
 import { Animal, Vacina } from "@/lib/types/dbTypes";
 
-export const FormSchema = z.object({
-	animalId: z.number(),
-	vacinaId: z.number(),
-	dataVacinacao: z.any(),
-	dosagem: z.number(),
-	observacao: z.string().max(250).optional(),
-});
+// export const FormSchema = z.object({
+// 	animalId: z.number(),
+// 	vacinaId: z.number(),
+// 	dataVacinacao: z.any(),
+// 	dosagem: z.number(),
+// 	observacao: z.string().optional(),
+// });
 
 export async function POST(req: Request) {
 	try {
 		const body = await req.json();
-		const { animalId, vacinaId, dataVacinacao, dosagem, observacao } =
-			FormSchema.parse(body);
+		const { animalId, vacinaId, dataVacinacao, dosagem, observacao } = body;
 
 		if (animalId && vacinaId && dataVacinacao && dosagem) {
 			const isoTimestamp = subHours(new Date().toISOString(), 0);
@@ -88,7 +87,7 @@ export async function POST(req: Request) {
 				]
 			);
 			console.log("Historico adicionado.");
-
+			revalidatePath("/historico");
 			return NextResponse.json(
 				{
 					success: true,
